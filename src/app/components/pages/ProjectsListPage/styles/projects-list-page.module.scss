@@ -1,0 +1,21 @@
+.projects {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+    border-radius: 5px;
+    border: 1px solid #EEEEEE;
+  }
+  &__name {
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

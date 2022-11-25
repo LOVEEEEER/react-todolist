@@ -1,0 +1,27 @@
+@import "../../../../styles/mixins/response-mixin.scss";
+
+.logo {
+	display: flex;
+	align-items: center;
+	&:hover {
+		cursor: pointer;
+	}
+	&_image {
+		margin-right: 15px;
+		width: 25px;
+		@mixin phones {
+			width: 20px;
+		}
+	}
+	&_text_block {
+		color: #ffffff;
+		font-weight: 700;
+		font-size: 20px;
+		@mixin phones {
+			font-size: 16px;
+		}
+	}
+	&_text_additional {
+		color: #61dafb;
+	}
+}
