@@ -25,6 +25,16 @@ const tasks = [
     }
 ];
 
+export const remove = (id) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const elementIndex = tasks.findIndex((task) => task.id === id);
+            tasks.splice(elementIndex, elementIndex);
+            resolve(null);
+        }, 500);
+    });
+};
+
 export function fetchTasks() {
     return new Promise((resolve) => {
         setTimeout(() => {
