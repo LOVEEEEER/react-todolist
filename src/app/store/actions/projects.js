@@ -1,6 +1,7 @@
 import {
     projectsReceived,
-    projectsRequested
+    projectsRequested,
+    projectsRequestFailed
 } from "../actionTypes/projectsTypes";
 
 export const requested = () => {
@@ -13,6 +14,13 @@ export const requested = () => {
 export const received = (payload) => {
     return {
         type: projectsReceived,
+        payload
+    };
+};
+
+export const requestFailed = (payload) => {
+    return {
+        type: projectsRequestFailed,
         payload
     };
 };

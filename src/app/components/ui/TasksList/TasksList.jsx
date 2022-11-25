@@ -9,6 +9,7 @@ import { removeTask } from "../../../store/reducers/tasksReducer";
 const TasksList = ({ tasks }) => {
     const dispatch = useDispatch();
     const handleRemoveTask = (id) => {
+        console.log(id);
         dispatch(removeTask(id));
     };
     return (
@@ -18,7 +19,7 @@ const TasksList = ({ tasks }) => {
                     <div className={styles.project__task_card}>
                         <div className={styles.project__task_text_block}>
                             <h3 className={styles.project__task_title}>
-                                {task.name}
+                                {task.title}
                             </h3>
                             <p className={styles.project__task_created_at}>
                                 Дата создания: {displayDate(task.created_at)}
@@ -42,9 +43,9 @@ TasksList.propTypes = {
         PropTypes.shape({
             projectId: PropTypes.string,
             id: PropTypes.string,
-            name: PropTypes.string,
+            title: PropTypes.string,
             description: PropTypes.string,
-            created_at: PropTypes.string
+            created_at: PropTypes.number
         })
     )
 };

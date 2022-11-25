@@ -1,13 +1,15 @@
-import { fetchProjects } from "../../api/projects";
-import { received, requested } from "../actions/projects";
+import projectsService from "../../services/projects.service";
+import { received, requested, requestFailed } from "../actions/projects";
 import {
     projectsReceived,
-    projectsRequested
+    projectsRequested,
+    projectsRequestFailed
 } from "../actionTypes/projectsTypes";
 
 const intitialState = {
     entities: [],
-    isLoading: true
+    isLoading: true,
+    error: null
 };
 
 const projectsReducer = (state = intitialState, action) => {
@@ -20,6 +22,9 @@ const projectsReducer = (state = intitialState, action) => {
                 isLoading: false,
                 entities: action.payload
             };
+        case projectsRequestFailed:
+            return { ...state, error: action.payload };
+
         default:
             return state;
     }
@@ -27,8 +32,12 @@ const projectsReducer = (state = intitialState, action) => {
 
 export const loadProjects = () => async (dispatch) => {
     dispatch(requested());
-    const projects = await fetchProjects();
-    dispatch(received(projects));
+    try {
+        const { content } = await projectsService.fetchAll();
+        dispatch(received(content));
+    } catch (error) {
+        dispatch(requestFailed(error.message));
+    }
 };
 
 export const getProjectById = (id) => (state) => {

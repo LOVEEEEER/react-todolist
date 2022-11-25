@@ -1,5 +1,7 @@
 import {
+    taskCreated,
     taskRemoved,
+    taskRequestFailed,
     tasksReceived,
     tasksRequested
 } from "../actionTypes/tasksTypes";
@@ -25,7 +27,22 @@ export const removed = (payload) => {
     };
 };
 
+export const requestFailed = (payload) => {
+    return {
+        type: taskRequestFailed,
+        payload
+    };
+};
+
+export const created = (payload) => {
+    return {
+        type: taskCreated,
+        payload
+    };
+};
+
 export default {
     received,
-    requested
+    requested,
+    created
 };
