@@ -1,10 +1,18 @@
-import { received, removed, requested } from "../actions/tasks";
+import {
+    received,
+    removed,
+    requested,
+    requestFailed,
+    created
+} from "../actions/tasks";
 import {
     tasksRequested,
     tasksReceived,
-    taskRemoved
+    taskRemoved,
+    taskRequestFailed,
+    taskCreated
 } from "../actionTypes/tasksTypes";
-import { fetchTasks, remove } from "../../api/tasks";
+import tasksService from "../../services/tasks.service";
 
 const initialState = {
     entities: [],
@@ -17,12 +25,19 @@ const tasksReducer = (state = initialState, action) => {
             return { ...state, isLoading: true };
         case tasksReceived:
             return { ...state, entities: action.payload, isLoading: false };
-        case taskRemoved:
+        case taskRemoved: {
             const newArray = state.entities.filter(
                 (task) => task.id !== action.payload
             );
             return { ...state, entities: newArray };
-
+        }
+        case taskRequestFailed:
+            return { ...state, error: action.payload };
+        case taskCreated: {
+            const newArray = [...state.entities];
+            newArray.push(action.payload);
+            return { ...state, entities: newArray };
+        }
         default:
             return state;
     }
@@ -30,8 +45,12 @@ const tasksReducer = (state = initialState, action) => {
 
 export const loadTasks = () => async (dispatch) => {
     dispatch(requested());
-    const tasks = await fetchTasks();
-    dispatch(received(tasks));
+    try {
+        const { content } = await tasksService.fetchAll();
+        dispatch(received(content));
+    } catch (error) {
+        dispatch(requestFailed(error.message));
+    }
 };
 
 export const getTasksByProjectId = (projectId) => (state) => {
@@ -39,8 +58,21 @@ export const getTasksByProjectId = (projectId) => (state) => {
 };
 
 export const removeTask = (id) => async (dispatch) => {
-    await remove();
-    dispatch(removed(id));
+    try {
+        await tasksService.delete(id);
+        dispatch(removed(id));
+    } catch (error) {
+        dispatch(requestFailed(error.message));
+    }
+};
+
+export const createTask = (task) => async (dispatch) => {
+    try {
+        await tasksService.create(task.id, task);
+        dispatch(created(task));
+    } catch (error) {
+        dispatch(requestFailed(error.message));
+    }
 };
 
 export const getTasks = () => (state) => state.tasks.entities;

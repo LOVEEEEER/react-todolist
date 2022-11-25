@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProjectById } from "../../../store/reducers/projectsReducer";
 import { getTasksByProjectId } from "../../../store/reducers/tasksReducer";
 import { displayDate } from "../../../utils/dateService";
 import Button from "../../common/Button";
+import Modal from "../../common/Modal/Modal";
+import CreateTaskForm from "../../ui/forms/CreateTaskForm";
 import TasksList from "../../ui/TasksList";
 import styles from "./styles/project-page.module.scss";
 
 const ProjectPage = () => {
+    const [modalActive, setModalActive] = useState(false);
     const { projectId } = useParams();
     const project = useSelector(getProjectById(projectId));
     const tasks = useSelector(getTasksByProjectId(projectId));
@@ -20,7 +23,9 @@ const ProjectPage = () => {
                         <p>Название проекта: {project.name}</p>
                         <p>Проект создан: {displayDate(project.created_at)}</p>
                     </div>
-                    <Button>Создать таск</Button>
+                    <Button onClick={() => setModalActive(true)}>
+                        Создать таск
+                    </Button>
                 </div>
                 <ul className={styles.project__tasks_list}>
                     {tasks.length > 0 ? (
@@ -29,6 +34,9 @@ const ProjectPage = () => {
                         "Список тасков пуст"
                     )}
                 </ul>
+                <Modal active={modalActive} setActive={setModalActive}>
+                    <CreateTaskForm projectId={projectId} />
+                </Modal>
             </main>
         );
     }

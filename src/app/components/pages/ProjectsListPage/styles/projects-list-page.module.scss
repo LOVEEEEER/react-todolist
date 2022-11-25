@@ -11,9 +11,10 @@
     border: 1px solid #EEEEEE;
   }
   &__name {
+    color: #000000;
+    text-decoration: none;
     font-size: 20px;
     font-weight: 600;
-    text-decoration: underline;
     &:hover {
       cursor: pointer;
     }

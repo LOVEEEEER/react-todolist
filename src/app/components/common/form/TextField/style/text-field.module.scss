@@ -1,0 +1,18 @@
+.text {
+  &_field {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid rgb(81, 81, 247);
+    border-radius: 5px;
+    &:focus {
+      outline: none;
+    }
+  }
+  &_label {
+    font-size: 14px;
+  }
+  &_error {
+    font-size: 9.5px;
+    color: rgb(140, 132, 219);
+  }
+}
