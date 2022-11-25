@@ -5,6 +5,7 @@ import { getProjectById } from "../../../store/reducers/projectsReducer";
 import { getTasksByProjectId } from "../../../store/reducers/tasksReducer";
 import { displayDate } from "../../../utils/dateService";
 import Button from "../../common/Button";
+import TasksList from "../../ui/TasksList";
 import styles from "./styles/project-page.module.scss";
 
 const ProjectPage = () => {
@@ -21,48 +22,12 @@ const ProjectPage = () => {
                     </div>
                     <Button>Создать таск</Button>
                 </div>
-
                 <ul className={styles.project__tasks_list}>
-                    {tasks.length > 0
-                        ? tasks.map((task) => (
-                              <li
-                                  key={task.id}
-                                  className={styles.project__task_item}
-                              >
-                                  <div className={styles.project__task_card}>
-                                      <div
-                                          className={
-                                              styles.project__task_text_block
-                                          }
-                                      >
-                                          <h3
-                                              className={
-                                                  styles.project__task_title
-                                              }
-                                          >
-                                              {task.name}
-                                          </h3>
-                                          <p
-                                              className={
-                                                  styles.project__task_created_at
-                                              }
-                                          >
-                                              Дата создания:{" "}
-                                              {displayDate(task.created_at)}
-                                          </p>
-                                          <p
-                                              className={
-                                                  styles.project__task_description
-                                              }
-                                          >
-                                              Описание: {task.description}
-                                          </p>
-                                      </div>
-                                      <Button>Delete</Button>
-                                  </div>
-                              </li>
-                          ))
-                        : "Список тасков пуст"}
+                    {tasks.length > 0 ? (
+                        <TasksList tasks={tasks} />
+                    ) : (
+                        "Список тасков пуст"
+                    )}
                 </ul>
             </main>
         );

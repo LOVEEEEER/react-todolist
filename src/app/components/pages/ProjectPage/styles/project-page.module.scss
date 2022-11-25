@@ -2,34 +2,10 @@
   &__name {
     text-align: center;
   }
-  &__task_card {
-    padding: 15px;
-    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-    border-radius: 10px;
-  }
-  &__task_item {
-    &:not(:last-child) {
-      margin-bottom: 25px;
-    }
-  }
-  &__task_description {
-    max-width: 500px;
-  }
-  &__task_title {
-    margin-bottom: 15px;
-  }
-  &__task_card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
   &__head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 35px;
-  }
-  &__task_created_at {
-    margin-bottom: 8px;
   }
 }
