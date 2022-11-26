@@ -3,14 +3,16 @@ import {
     removed,
     requested,
     requestFailed,
-    created
+    created,
+    updated
 } from "../actions/tasks";
 import {
     tasksRequested,
     tasksReceived,
     taskRemoved,
     taskRequestFailed,
-    taskCreated
+    taskCreated,
+    taskUpdated
 } from "../actionTypes/tasksTypes";
 import tasksService from "../../services/tasks.service";
 
@@ -36,6 +38,14 @@ const tasksReducer = (state = initialState, action) => {
         case taskCreated: {
             const newArray = [...state.entities];
             newArray.push(action.payload);
+            return { ...state, entities: newArray };
+        }
+        case taskUpdated: {
+            const newArray = [...state.entities];
+            const elementIndex = newArray.findIndex(
+                (task) => task.id === action.payload.id
+            );
+            newArray[elementIndex] = action.payload;
             return { ...state, entities: newArray };
         }
         default:
@@ -64,6 +74,19 @@ export const removeTask = (id) => async (dispatch) => {
     } catch (error) {
         dispatch(requestFailed(error.message));
     }
+};
+
+export const updateTask = (data) => async (dispatch) => {
+    try {
+        await tasksService.update(data.id, data);
+        dispatch(updated(data));
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+export const getTaskById = (id) => (state) => {
+    return state.tasks.entities.find((task) => task.id === id);
 };
 
 export const createTask = (task) => async (dispatch) => {

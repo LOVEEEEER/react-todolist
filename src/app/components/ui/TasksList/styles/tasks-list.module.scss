@@ -1,26 +1,5 @@
 .project {
-  &__task_card {
-    padding: 15px;
-    border: 1px solid #EEEEEE;
-    border-radius: 10px;
-  }
   &__task_item {
-    &:not(:last-child) {
-      margin-bottom: 25px;
-    }
-  }
-  &__task_description {
-    max-width: 500px;
-  }
-  &__task_title {
-    margin-bottom: 15px;
-  }
-  &__task_card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  &__task_created_at {
-    margin-bottom: 8px;
+    margin-bottom: 25px;
   }
 }

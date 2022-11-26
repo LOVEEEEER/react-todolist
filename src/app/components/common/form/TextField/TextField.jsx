@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./style/text-field.module.scss";
+import styles from "./styles/text-field.module.scss";
 
 const TextField = ({ type, name, onChange, value, label, error, ...rest }) => {
     return (
-        <div>
+        <div className={styles.text_field_block}>
             <label className={styles.text_label} htmlFor={name}>
                 {label}
             </label>

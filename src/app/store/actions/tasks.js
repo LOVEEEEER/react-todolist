@@ -3,7 +3,8 @@ import {
     taskRemoved,
     taskRequestFailed,
     tasksReceived,
-    tasksRequested
+    tasksRequested,
+    taskUpdated
 } from "../actionTypes/tasksTypes";
 
 export const received = (payload) => {
@@ -37,6 +38,13 @@ export const requestFailed = (payload) => {
 export const created = (payload) => {
     return {
         type: taskCreated,
+        payload
+    };
+};
+
+export const updated = (payload) => {
+    return {
+        type: taskUpdated,
         payload
     };
 };
