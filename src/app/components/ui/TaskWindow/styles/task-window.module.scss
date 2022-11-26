@@ -1,0 +1,10 @@
+.task {
+  &__window_title {
+    margin-bottom: 15px;
+  }
+  &__window_item {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -12,6 +12,14 @@ export const validatorConfig = {
     deadline: {
         isRequired: {
             message: "Обязательно для заполнения"
+        },
+        correctDate: {
+            message: "Некоректная дата"
+        }
+    },
+    priority: {
+        isRequired: {
+            message: "Обязательно для заполнения"
         }
     }
 };

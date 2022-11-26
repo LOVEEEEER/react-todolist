@@ -3,7 +3,10 @@ export const validator = (data, config) => {
     function validate(validateMethod, data, config) {
         switch (validateMethod) {
             case "isRequired":
-                if (data.trim().length === 0) return config.message;
+                if (data.toString().trim().length === 0) return config.message;
+                break;
+            case "correctDate":
+                if (Date.now() > data) return config.message;
                 break;
             default:
                 return config.message;

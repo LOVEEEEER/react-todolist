@@ -14,6 +14,10 @@ const tasksService = {
     create: async (id, payload) => {
         const { data } = await httpService.put(tasksEndPoint + id, payload);
         return data;
+    },
+    update: async (id, payload) => {
+        const { data } = await httpService.put(tasksEndPoint + id, payload);
+        return data;
     }
 };
 
