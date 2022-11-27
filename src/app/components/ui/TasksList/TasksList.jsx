@@ -1,39 +1,38 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./styles/tasks-list.module.scss";
-// import { useDispatch } from "react-redux";
 import Modal from "../../common/Modal";
 import TaskWindow from "../TaskWindow/TaskWindow";
-import TaskCard from "../TaskCard/TaskCard";
-// import { removeTask } from "../../../store/reducers/tasksReducer";
+import TaskCard from "../cards/TaskCard";
+import { getSortedItemsByCreatedAt } from "../../../utils/getSortedItemsByCreatedAt";
 
 const TasksList = ({ tasks, ...rest }) => {
     const [modalActive, setModalActive] = useState(false);
     const [activeTask, setActiveTask] = useState(null);
-    // const dispatch = useDispatch();
-    // const handleRemoveTask = (id) => {
-    //     console.log(id);
-    //     dispatch(removeTask(id));
-    // };
     const handleToggleTask = (id) => {
         setActiveTask(id);
         setModalActive(true);
     };
+    const sortedItems = getSortedItemsByCreatedAt(tasks);
     return (
         <>
             <ul className={styles.project__tasks_list}>
-                {tasks.map((task) => (
-                    // <li key={task.id} className={styles.project__task_item}>
-                    <TaskCard
-                        key={task.id}
-                        task={task}
-                        onToggleTask={handleToggleTask}
-                        {...rest}
-                    />
-                    // </li>
+                {sortedItems.map((task, index) => (
+                    <li key={task.id} className={styles.project__task_item}>
+                        <TaskCard
+                            key={task.id}
+                            task={task}
+                            onToggleTask={handleToggleTask}
+                            serialNumber={index + 1}
+                            {...rest}
+                        />
+                    </li>
                 ))}
                 <Modal active={modalActive} setActive={setModalActive}>
-                    <TaskWindow id={activeTask} />
+                    <TaskWindow
+                        id={activeTask}
+                        setActiveModal={setModalActive}
+                    />
                 </Modal>
             </ul>
         </>

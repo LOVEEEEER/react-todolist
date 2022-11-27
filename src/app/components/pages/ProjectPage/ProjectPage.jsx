@@ -61,6 +61,7 @@ const ProjectPage = () => {
                 </div>
                 <div className={styles.project__columns}>
                     <GroupList
+                        currentColumn={currentColumn}
                         items={[
                             { name: "Queue", id: 1, value: "queue" },
                             {

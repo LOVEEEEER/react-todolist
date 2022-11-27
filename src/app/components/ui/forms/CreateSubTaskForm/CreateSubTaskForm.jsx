@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { useForm } from "../../../../hooks/useForm";
-import { createTask } from "../../../../store/reducers/tasksReducer";
+import { createSubTask } from "../../../../store/reducers/subTasksReducer";
 import Button from "../../../common/Button";
 import SelectField from "../../../common/form/SelectField";
 import TextField from "../../../common/form/TextField";
-import styles from "./styles/create-task-form.module.scss";
+import styles from "./styles/create-sub-task-form.module.scss";
+import backArrowIcon from "../../../../assets/svg/back-arrow.svg";
 import { validatorConfig } from "./validatorConfig";
 
-const CreateTaskForm = () => {
+const CreateSubTaskForm = ({ taskId, toggleContent }) => {
     const dispatch = useDispatch();
-    const { projectId } = useParams();
     const { data, handleChange, errors } = useForm(
         {
             title: "",
@@ -21,10 +21,25 @@ const CreateTaskForm = () => {
         },
         validatorConfig
     );
-
     const [deadline, setDeadline] = useState("");
-
     const isValid = Object.keys(errors).length === 0;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isValid) {
+            const newSubTask = {
+                taskId,
+                created_at: Date.now(),
+                title: data.title,
+                id: `${Date.now() + Math.ceil(Math.random())}`,
+                description: data.description,
+                deadline: data.deadline,
+                priority: data.priority,
+                status: "queue"
+            };
+            dispatch(createSubTask(newSubTask));
+            toggleContent("info");
+        }
+    };
 
     const handleDateChange = (e) => {
         const {
@@ -50,26 +65,23 @@ const CreateTaskForm = () => {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isValid) {
-            const newTask = {
-                projectId: projectId,
-                created_at: Date.now(),
-                title: data.title,
-                id: `${Date.now() + Math.ceil(Math.random())}`,
-                description: data.description,
-                deadline: data.deadline,
-                priority: data.priority,
-                status: "queue"
-            };
-            dispatch(createTask(newTask));
-        }
-    };
-
     return (
         <form onSubmit={handleSubmit}>
-            <div className={styles.create_task_form}>
+            <div className={styles.create_sub_task_form}>
+                <div
+                    className={styles.back_arrow_wrap}
+                    onClick={() => toggleContent("info")}
+                >
+                    <img
+                        className={styles.back_arrow}
+                        src={backArrowIcon}
+                        alt="back"
+                    />
+                    <span className={styles.back_arrow_text}>Назад</span>
+                </div>
+                <h3 className={styles.create_sub_task_title}>
+                    Создание подзадачи
+                </h3>
                 <TextField
                     label="Название задачи"
                     name="title"
@@ -120,4 +132,9 @@ const CreateTaskForm = () => {
     );
 };
 
-export default CreateTaskForm;
+CreateSubTaskForm.propTypes = {
+    taskId: PropTypes.string.isRequired,
+    toggleContent: PropTypes.func.isRequired
+};
+
+export default CreateSubTaskForm;

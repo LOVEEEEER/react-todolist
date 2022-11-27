@@ -1,6 +1,5 @@
-.create_task_form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.create {
+  &_sub_task_title {
+    margin-bottom: 25px;
+  }
 }

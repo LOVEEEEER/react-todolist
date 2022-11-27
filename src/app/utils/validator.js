@@ -8,6 +8,10 @@ export const validator = (data, config) => {
             case "correctDate":
                 if (Date.now() > data) return config.message;
                 break;
+            case "max":
+                if (data.length > config.params) return config.message;
+                break;
+
             default:
                 return config.message;
         }

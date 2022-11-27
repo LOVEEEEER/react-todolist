@@ -1,0 +1,17 @@
+.task {
+  &__window_sub_tasks_list {
+    margin-bottom: 13px;
+  }
+  &__window_sub_tasks_item {
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+  &__window_sub_tasks_view {
+    font-size: 15px;
+    text-align: center;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

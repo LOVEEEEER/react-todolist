@@ -7,7 +7,12 @@
   &__window_head_block {
     display: flex;
     align-items: center; 
+    justify-content: space-between;
     margin-bottom: 15px;
+  }
+  &__window_head_first {
+    display: flex;
+    align-items: center;
   }
   &__window_edit {
     width: 20px;
@@ -17,5 +22,14 @@
   }
   &__window_title {
     margin-right: 15px;
+  }
+  &__window_list {
+    margin-bottom: 10px;
+  }
+  &__window_sub_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
   }
 }

@@ -1,0 +1,32 @@
+.task {
+  &__window_sub_tasks_card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #EEEEEE;
+  }
+  &__window_sub_task_created {
+    font-size: 12px;
+  }
+  &__window_sub_tasks_title {
+    margin-right: 5px;
+    font-weight: 600;
+    font-size: 18px;
+    font-size: 20px;
+  }
+  &__window_sub_head_text {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+  }
+  &__window_sub_tasks_description {
+    word-wrap: unset;
+    width: 300px;
+    font-size: 13px;
+  }
+  &__window_sub_second_block {
+    display: flex;
+    flex-direction: column;
+  }
+}

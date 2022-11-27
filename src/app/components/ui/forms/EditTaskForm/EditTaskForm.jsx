@@ -1,31 +1,44 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useForm } from "../../../../hooks/useForm";
-import { createTask } from "../../../../store/reducers/tasksReducer";
+import PropTypes from "prop-types";
 import Button from "../../../common/Button";
 import SelectField from "../../../common/form/SelectField";
 import TextField from "../../../common/form/TextField";
-import styles from "./styles/create-task-form.module.scss";
+import { useForm } from "../../../../hooks/useForm";
+import styles from "./styles/edit-task-form.module.scss";
+import backArrowIcon from "../../../../assets/svg/back-arrow.svg";
+import { getFormFormatDateFromTimestamp } from "../../../../utils/dateService";
+import { useDispatch } from "react-redux";
+import { updateTask } from "../../../../store/reducers/tasksReducer";
 import { validatorConfig } from "./validatorConfig";
 
-const CreateTaskForm = () => {
+const EditTaskForm = ({ task, toggleContent }) => {
     const dispatch = useDispatch();
-    const { projectId } = useParams();
     const { data, handleChange, errors } = useForm(
         {
-            title: "",
-            description: "",
-            deadline: "",
-            priority: ""
+            title: task.title,
+            description: task.description,
+            deadline: task.deadline,
+            priority: task.priority
         },
         validatorConfig
     );
 
-    const [deadline, setDeadline] = useState("");
-
+    const [deadline, setDeadline] = useState(
+        getFormFormatDateFromTimestamp(task.deadline)
+    );
     const isValid = Object.keys(errors).length === 0;
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isValid) {
+            const updatedTask = {
+                ...task,
+                ...data,
+                deadline
+            };
+            dispatch(updateTask(updatedTask));
+            toggleContent("info");
+        }
+    };
     const handleDateChange = (e) => {
         const {
             nativeEvent: { data: lastOne },
@@ -49,27 +62,20 @@ const CreateTaskForm = () => {
             handleChange(fakeEvent);
         }
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isValid) {
-            const newTask = {
-                projectId: projectId,
-                created_at: Date.now(),
-                title: data.title,
-                id: `${Date.now() + Math.ceil(Math.random())}`,
-                description: data.description,
-                deadline: data.deadline,
-                priority: data.priority,
-                status: "queue"
-            };
-            dispatch(createTask(newTask));
-        }
-    };
-
     return (
         <form onSubmit={handleSubmit}>
-            <div className={styles.create_task_form}>
+            <div>
+                <div
+                    className={styles.back_arrow_wrap}
+                    onClick={() => toggleContent("info")}
+                >
+                    <img
+                        className={styles.back_arrow}
+                        src={backArrowIcon}
+                        alt="back"
+                    />
+                    <span className={styles.back_arrow_text}>Назад</span>
+                </div>
                 <TextField
                     label="Название задачи"
                     name="title"
@@ -112,12 +118,15 @@ const CreateTaskForm = () => {
                     onChange={handleChange}
                     label="Приоритет"
                 />
-                <Button disabled={!isValid} style={{ width: "100%" }}>
-                    Submit
-                </Button>
+                <Button style={{ width: "100%" }}>Редактировать</Button>
             </div>
         </form>
     );
 };
 
-export default CreateTaskForm;
+EditTaskForm.propTypes = {
+    task: PropTypes.object.isRequired,
+    toggleContent: PropTypes.func.isRequired
+};
+
+export default EditTaskForm;
