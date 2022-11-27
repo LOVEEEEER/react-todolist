@@ -1,5 +1,6 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import { thunk } from "./middleware/thunk";
+import commentsReducer from "./reducers/commentsReducer";
 import projectsReducer from "./reducers/projectsReducer";
 import subTasksReducer from "./reducers/subTasksReducer";
 import tasksReducer from "./reducers/tasksReducer";
@@ -9,7 +10,8 @@ const middleWareEnchancer = applyMiddleware(thunk);
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     subTasks: subTasksReducer,
-    projects: projectsReducer
+    projects: projectsReducer,
+    comments: commentsReducer
 });
 
 export function configureStore() {

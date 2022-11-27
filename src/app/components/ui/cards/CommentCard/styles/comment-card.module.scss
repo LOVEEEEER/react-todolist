@@ -1,0 +1,39 @@
+.comments {
+  &__card {
+    padding: 5px;
+    border: 1px solid #EEEEEE;
+  }
+  &__card_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  &__created {
+    font-size: 12px;
+  }
+  &__author_image {
+    margin-right: 5px;
+    padding: 5px;
+    width: 40px;
+    background-color: grey;
+    border-radius: 30%;
+  }
+  &__author {
+    margin-right: 7px;
+    font-weight: 600;
+  }
+  &__answer {
+    font-size: 12px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__author_info {
+    display: flex;
+    align-items: center;
+  }
+  &__answer_ques {
+    font-size: 11px;
+  }
+}

@@ -9,6 +9,7 @@ import {
 } from "../../../store/reducers/tasksReducer";
 import { displayDate } from "../../../utils/dateService";
 import Button from "../../common/Button";
+import TextField from "../../common/form/TextField";
 import GroupList from "../../common/GroupList";
 import Modal from "../../common/Modal/Modal";
 import CreateTaskForm from "../../ui/forms/CreateTaskForm";
@@ -19,6 +20,7 @@ const ProjectPage = () => {
     const [modalActive, setModalActive] = useState(false);
     const [currentColumn, setCurrentColumn] = useState("queue");
     const [currentTask, setCurrentTask] = useState();
+    const [searchQuery, setSearchQuery] = useState("");
     const dispatch = useDispatch();
     const { projectId } = useParams();
     const project = useSelector(getProjectById(projectId));
@@ -36,6 +38,10 @@ const ProjectPage = () => {
         setCurrentTask(null);
     };
 
+    const handleSearchQuery = (value) => {
+        setSearchQuery(value);
+    };
+
     const handleDragDrop = (status) => {
         const updatedTask = {
             ...currentTask,
@@ -48,6 +54,14 @@ const ProjectPage = () => {
         const filteredTasks = tasks.filter(
             (task) => task.status === currentColumn
         );
+        const searchedQueryItems =
+            searchQuery.length === 0
+                ? filteredTasks
+                : Number(searchQuery)
+                ? tasks.filter((task) =>
+                      task.index.toString().includes(searchQuery)
+                  )
+                : tasks.filter((task) => task.title.includes(searchQuery));
         return (
             <main className={styles.project__page}>
                 <div className={styles.project__head}>
@@ -75,10 +89,16 @@ const ProjectPage = () => {
                         onDragDrop={handleDragDrop}
                     />
                 </div>
+                <TextField
+                    value={searchQuery}
+                    onChange={({ target: { value } }) =>
+                        handleSearchQuery(value)
+                    }
+                />
                 <ul className={styles.project__tasks_list}>
                     {tasks.length > 0 ? (
                         <TasksList
-                            tasks={filteredTasks}
+                            tasks={searchedQueryItems}
                             onDragStart={handleDragStart}
                             onDragEnd={handleDragEnd}
                         />

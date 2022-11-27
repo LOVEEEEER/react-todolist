@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubTasksByTaskId } from "../../../store/reducers/subTasksReducer";
 import SubTasksList from "../SubTasksList";
 import { removeTask } from "../../../store/reducers/tasksReducer";
+import Comments from "../Comments";
 
 const TaskInfo = ({ task, toggleContent, setActiveModal }) => {
     const dispatch = useDispatch();
@@ -77,6 +78,14 @@ const TaskInfo = ({ task, toggleContent, setActiveModal }) => {
             ) : (
                 "Список подзадач пуст"
             )}
+            <div className={styles.task__window_comments}>
+                <h3
+                    className={`${styles.task__window_sub_task_title} ${styles.task__comment_title}`}
+                >
+                    Комментарии
+                </h3>
+                <Comments taskId={task.id} />
+            </div>
         </div>
     );
 };

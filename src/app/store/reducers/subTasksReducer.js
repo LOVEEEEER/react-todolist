@@ -75,8 +75,14 @@ export const createSubTask = (data) => async (dispatch) => {
     }
 };
 
+export const getSubTaskOfTaskLength = (taskId) => (state) => {
+    const subTasksOfTask = state.subTasks.entities.filter(
+        (subTask) => subTask.taskId === taskId
+    );
+    return subTasksOfTask.length;
+};
+
 export const getSubTasksByTaskId = (taskId) => (state) => {
-    console.log(state, taskId);
     return state.subTasks.entities.filter(
         (subTask) => subTask.taskId === taskId
     );

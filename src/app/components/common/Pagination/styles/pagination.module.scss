@@ -1,0 +1,30 @@
+.pagination {
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__button {
+    border: 0;
+    max-width: 60px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 18px;
+    transition: 0.5s;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    &.active {
+      background-color: rgb(163, 116, 224) !important;
+    }
+  }
+  &__item {
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
