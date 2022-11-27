@@ -98,6 +98,13 @@ export const createTask = (task) => async (dispatch) => {
     }
 };
 
+export const getTasksOfProjectLength = (projectId) => (state) => {
+    const projectTasks = state.tasks.entities.filter(
+        (task) => task.projectId === projectId
+    );
+    return projectTasks.length;
+};
+
 export const getTasks = () => (state) => state.tasks.entities;
 export const getIsLoading = () => (state) => state.tasks.isLoading;
 

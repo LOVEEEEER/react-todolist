@@ -14,15 +14,12 @@ const SubTasksList = ({ subTasks }) => {
     return (
         <>
             <ul className={styles.task__window_sub_tasks_list}>
-                {subTasksCrop.map((subTask, index) => (
+                {subTasksCrop.map((subTask) => (
                     <li
                         key={subTask.id}
                         className={styles.task__window_sub_tasks_item}
                     >
-                        <SubTaskCard
-                            subTask={subTask}
-                            serialNumber={index + 1}
-                        />
+                        <SubTaskCard subTask={subTask} />
                     </li>
                 ))}
             </ul>

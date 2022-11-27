@@ -1,6 +1,5 @@
 .select {
   position: relative;
-  margin-bottom: 15px;
   padding: 6px;
   font-family: Arial;
   width: 100%;
@@ -10,9 +9,15 @@
     outline: none;
   }
   &_block {
+    margin-bottom: 15px;
     width: 100%;
   }
   &_label {
     font-size: 14px;
   }
+}
+
+.text_error {
+  font-size: 9.5px;
+  color: rgb(140, 132, 219);
 }

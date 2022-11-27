@@ -9,7 +9,7 @@ export const validatorConfig = {
             message: "Обязательно для заполнения"
         }
     },
-    deadline: {
+    deadLine: {
         isRequired: {
             message: "Обязательно для заполнения"
         },

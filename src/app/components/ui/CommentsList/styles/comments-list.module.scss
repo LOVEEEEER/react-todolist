@@ -1,0 +1,10 @@
+.comments {
+  &__list {
+    margin-top: 15px;
+  }
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+}

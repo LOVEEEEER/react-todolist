@@ -1,4 +1,8 @@
+@import "../../../../styles/mixins/response-mixin.scss";
+
 .modal {
+  max-height: 100vh;
+  overflow-y: auto;
   position: fixed;  
   top: 0;
   left: 0;
@@ -19,6 +23,9 @@
     padding: 40px;
     border-radius: 12px;
     background-color: #FFFFFF;
+    @include phones {
+      padding: 15px;
+    }
     // width: 25vw;
     transform: scale(0.5);
     transition: 0.4s all;

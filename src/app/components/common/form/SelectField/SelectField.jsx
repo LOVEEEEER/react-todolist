@@ -8,7 +8,8 @@ const SelectField = ({
     options,
     onChange,
     value,
-    label
+    label,
+    error
 }) => {
     return (
         <div className={styles.select_block}>
@@ -35,13 +36,14 @@ const SelectField = ({
                     </option>
                 ))}
             </select>
+            {error && <p className={styles.text_error}>{error}</p>}
         </div>
     );
 };
 
 SelectField.propTypes = {
     name: PropTypes.string.isRequired,
-    defaultOption: PropTypes.string.isRequired,
+    defaultOption: PropTypes.string,
     options: PropTypes.arrayOf(
         PropTypes.shape({
             label: PropTypes.string,
@@ -50,7 +52,8 @@ SelectField.propTypes = {
     ).isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    error: PropTypes.string
 };
 
 export default SelectField;

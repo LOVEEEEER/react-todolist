@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../../../hooks/useForm";
-import { createSubTask } from "../../../../store/reducers/subTasksReducer";
+import {
+    createSubTask,
+    getSubTaskOfTaskLength
+} from "../../../../store/reducers/subTasksReducer";
 import Button from "../../../common/Button";
 import SelectField from "../../../common/form/SelectField";
 import TextField from "../../../common/form/TextField";
@@ -16,13 +19,15 @@ const CreateSubTaskForm = ({ taskId, toggleContent }) => {
         {
             title: "",
             description: "",
-            deadline: "",
+            deadLine: "",
             priority: ""
         },
         validatorConfig
     );
-    const [deadline, setDeadline] = useState("");
     const isValid = Object.keys(errors).length === 0;
+
+    const subTasksOfTaskLength = useSelector(getSubTaskOfTaskLength());
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isValid) {
@@ -32,36 +37,13 @@ const CreateSubTaskForm = ({ taskId, toggleContent }) => {
                 title: data.title,
                 id: `${Date.now() + Math.ceil(Math.random())}`,
                 description: data.description,
-                deadline: data.deadline,
                 priority: data.priority,
-                status: "queue"
+                status: "queue",
+                index: subTasksOfTaskLength + 1
             };
+
             dispatch(createSubTask(newSubTask));
             toggleContent("info");
-        }
-    };
-
-    const handleDateChange = (e) => {
-        const {
-            nativeEvent: { data: lastOne },
-            target: { name, value }
-        } = e;
-        if (!Number.isNaN(Number(lastOne)) && value.length < 11) {
-            const deadlineVal =
-                value.length === 2 || value.length === 5 ? `${value}.` : value;
-            setDeadline(deadlineVal);
-            const timeStamp = new Date(
-                deadlineVal.slice(6, 11),
-                Number(deadlineVal.slice(3, 5)) - 1,
-                deadlineVal.slice(0, 2)
-            ).getTime();
-            const fakeEvent = {
-                target: {
-                    name: name,
-                    value: timeStamp
-                }
-            };
-            handleChange(fakeEvent);
         }
     };
 
@@ -96,14 +78,6 @@ const CreateSubTaskForm = ({ taskId, toggleContent }) => {
                     onChange={handleChange}
                     error={errors.description}
                 />
-                <TextField
-                    label="Дедлайн"
-                    name="deadline"
-                    value={deadline}
-                    onChange={handleDateChange}
-                    error={errors.deadline}
-                    placeholder="XX.MM.YYYY"
-                />
                 <SelectField
                     name="priority"
                     options={[
@@ -123,6 +97,7 @@ const CreateSubTaskForm = ({ taskId, toggleContent }) => {
                     value={data.priority}
                     onChange={handleChange}
                     label="Приоритет"
+                    error={errors.priority}
                 />
                 <Button disabled={!isValid} style={{ width: "100%" }}>
                     Submit

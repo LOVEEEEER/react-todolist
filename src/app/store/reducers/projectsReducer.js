@@ -1,6 +1,14 @@
 import projectsService from "../../services/projects.service";
-import { received, requested, requestFailed } from "../actions/projects";
 import {
+    created,
+    received,
+    removed,
+    requested,
+    requestFailed
+} from "../actions/projects";
+import {
+    projectCreated,
+    projectRemoved,
     projectsReceived,
     projectsRequested,
     projectsRequestFailed
@@ -24,7 +32,17 @@ const projectsReducer = (state = intitialState, action) => {
             };
         case projectsRequestFailed:
             return { ...state, error: action.payload };
-
+        case projectCreated: {
+            const newArray = [...state.entities];
+            newArray.push(action.payload);
+            return { ...state, entities: newArray };
+        }
+        case projectRemoved: {
+            const newArray = [...state.entities].filter(
+                (project) => project.id !== action.payload
+            );
+            return { ...state, entities: newArray };
+        }
         default:
             return state;
     }
@@ -35,6 +53,24 @@ export const loadProjects = () => async (dispatch) => {
     try {
         const { content } = await projectsService.fetchAll();
         dispatch(received(content));
+    } catch (error) {
+        dispatch(requestFailed(error.message));
+    }
+};
+
+export const createProject = (data) => async (dispatch) => {
+    try {
+        await projectsService.create(data.id, data);
+        dispatch(created(data));
+    } catch (error) {
+        dispatch(requestFailed(error.message));
+    }
+};
+
+export const removeProject = (id) => async (dispatch) => {
+    try {
+        await projectsService.remove(id);
+        dispatch(removed(id));
     } catch (error) {
         dispatch(requestFailed(error.message));
     }

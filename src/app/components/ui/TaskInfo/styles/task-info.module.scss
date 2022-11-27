@@ -1,4 +1,9 @@
 .task {
+  &__window {
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
   &__window_item {
     &:not(:last-child) {
       margin-bottom: 10px;
@@ -13,6 +18,7 @@
   &__window_head_first {
     display: flex;
     align-items: center;
+    margin-right: 30px;
   }
   &__window_edit {
     width: 20px;
@@ -31,5 +37,8 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 18px;
+  }
+  &__comment_title {
+    margin-bottom: 15px;
   }
 }

@@ -4,13 +4,7 @@ import Button from "../../../common/Button";
 import { displayDate } from "../../../../utils/dateService";
 import styles from "./styles/task.card.module.scss";
 
-const TaskCard = ({
-    task,
-    onToggleTask,
-    onDragStart,
-    onDragEnd,
-    serialNumber
-}) => {
+const TaskCard = ({ task, onToggleTask, onDragStart, onDragEnd }) => {
     const getPriorityColor = (color) => {
         switch (color) {
             case "low":
@@ -33,7 +27,7 @@ const TaskCard = ({
         >
             <div className={styles.project__task_text_block}>
                 <h3 className={styles.project__task_title}>
-                    {serialNumber}. {task.title}
+                    {task.index}. {task.title}
                 </h3>
                 <p className={styles.project__task_created_at}>
                     Дата создания: {displayDate(task.created_at)}
@@ -54,8 +48,7 @@ TaskCard.propTypes = {
     task: PropTypes.object.isRequired,
     onToggleTask: PropTypes.func.isRequired,
     onDragStart: PropTypes.func.isRequired,
-    onDragEnd: PropTypes.func.isRequired,
-    serialNumber: PropTypes.number.isRequired
+    onDragEnd: PropTypes.func.isRequired
 };
 
 export default TaskCard;

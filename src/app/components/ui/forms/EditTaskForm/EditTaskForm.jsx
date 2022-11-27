@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Button from "../../../common/Button";
 import SelectField from "../../../common/form/SelectField";
@@ -13,17 +13,14 @@ import { validatorConfig } from "./validatorConfig";
 
 const EditTaskForm = ({ task, toggleContent }) => {
     const dispatch = useDispatch();
-    const { data, handleChange, errors } = useForm(
+    const { data, handleChange, errors, handleDateChange, deadLine } = useForm(
         {
             title: task.title,
             description: task.description,
             deadline: task.deadline,
             priority: task.priority
         },
-        validatorConfig
-    );
-
-    const [deadline, setDeadline] = useState(
+        validatorConfig,
         getFormFormatDateFromTimestamp(task.deadline)
     );
     const isValid = Object.keys(errors).length === 0;
@@ -32,34 +29,10 @@ const EditTaskForm = ({ task, toggleContent }) => {
         if (isValid) {
             const updatedTask = {
                 ...task,
-                ...data,
-                deadline
+                ...data
             };
             dispatch(updateTask(updatedTask));
             toggleContent("info");
-        }
-    };
-    const handleDateChange = (e) => {
-        const {
-            nativeEvent: { data: lastOne },
-            target: { name, value }
-        } = e;
-        if (!Number.isNaN(Number(lastOne)) && value.length < 11) {
-            const deadlineVal =
-                value.length === 2 || value.length === 5 ? `${value}.` : value;
-            setDeadline(deadlineVal);
-            const timeStamp = new Date(
-                deadlineVal.slice(6, 11),
-                Number(deadlineVal.slice(3, 5)) - 1,
-                deadlineVal.slice(0, 2)
-            ).getTime();
-            const fakeEvent = {
-                target: {
-                    name: name,
-                    value: timeStamp
-                }
-            };
-            handleChange(fakeEvent);
         }
     };
     return (
@@ -93,9 +66,9 @@ const EditTaskForm = ({ task, toggleContent }) => {
                 <TextField
                     label="Дедлайн"
                     name="deadline"
-                    value={deadline}
+                    value={deadLine}
                     onChange={handleDateChange}
-                    error={errors.deadline}
+                    error={errors.deadLine}
                     placeholder="XX.MM.YYYY"
                 />
                 <SelectField

@@ -5,25 +5,32 @@ import Modal from "../../common/Modal";
 import TaskWindow from "../TaskWindow/TaskWindow";
 import TaskCard from "../cards/TaskCard";
 import { getSortedItemsByCreatedAt } from "../../../utils/getSortedItemsByCreatedAt";
+import usePaginate from "../../../hooks/usePaginate";
+import Pagination from "../../common/Pagination";
 
 const TasksList = ({ tasks, ...rest }) => {
     const [modalActive, setModalActive] = useState(false);
     const [activeTask, setActiveTask] = useState(null);
+    const sortedItems = getSortedItemsByCreatedAt(tasks);
+    const {
+        itemsCrop: tasksCrop,
+        currentPage,
+        handlePageChange,
+        pageSize
+    } = usePaginate(sortedItems, 8);
     const handleToggleTask = (id) => {
         setActiveTask(id);
         setModalActive(true);
     };
-    const sortedItems = getSortedItemsByCreatedAt(tasks);
     return (
         <>
             <ul className={styles.project__tasks_list}>
-                {sortedItems.map((task, index) => (
+                {tasksCrop.map((task) => (
                     <li key={task.id} className={styles.project__task_item}>
                         <TaskCard
                             key={task.id}
                             task={task}
                             onToggleTask={handleToggleTask}
-                            serialNumber={index + 1}
                             {...rest}
                         />
                     </li>
@@ -35,6 +42,12 @@ const TasksList = ({ tasks, ...rest }) => {
                     />
                 </Modal>
             </ul>
+            <Pagination
+                itemsCount={tasks.length}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+                pageSize={pageSize}
+            />
         </>
     );
 };

@@ -1,4 +1,7 @@
 .projects {
+  &__list {
+    margin-top: 20px;
+  }
   &__item {
     display: flex;
     justify-content: space-between;

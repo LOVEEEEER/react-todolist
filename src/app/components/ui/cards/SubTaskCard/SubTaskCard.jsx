@@ -6,50 +6,44 @@ import Button from "../../../common/Button";
 import { useDispatch } from "react-redux";
 import { removeSubTask } from "../../../../store/reducers/subTasksReducer";
 
-const SubTaskCard = ({ subTask, serialNumber }) => {
+const SubTaskCard = ({ subTask }) => {
     const subTaskElement = useRef();
     const dispatch = useDispatch();
     const successSubTask = () => {
         subTaskElement.current.style.backgroundColor = "rgb(177, 235, 177)";
         dispatch(removeSubTask(subTask.id));
     };
+
     return (
-        <div
-            className={styles.task__window_sub_tasks_card}
-            ref={subTaskElement}
-        >
-            <div className={styles.task__window_sub_main_info}>
-                <div className={styles.task__window_sub_head_text}>
-                    <p className={styles.task__window_sub_tasks_title}>
-                        {serialNumber}. {subTask.title}
-                    </p>
+        <div className={styles.task__window_sub_task_card} ref={subTaskElement}>
+            <div>
+                <div className={styles.task__window_sub_task_head}>
+                    <h3 className={styles.task__window_sub_task_title}>
+                        {subTask.title}
+                    </h3>
                     <span className={styles.task__window_sub_task_created}>
-                        Создана: {displayDate(subTask.created_at)}
+                        {displayDate(subTask.created_at)}
                     </span>
                 </div>
-                <p className={styles.task__window_sub_tasks_description}>
+                <span className={styles.task__window_sub_description}>
                     {subTask.description}
-                </p>
+                </span>
             </div>
-
-            <div className={styles.task__window_sub_second_block}>
-                <Button
-                    onClick={successSubTask}
-                    style={{
-                        marginBottom: "7px"
-                    }}
-                    color="success"
-                >
-                    Done
-                </Button>
-            </div>
+            <Button
+                onClick={successSubTask}
+                style={{
+                    marginBottom: "7px"
+                }}
+                color="success"
+            >
+                Done
+            </Button>
         </div>
     );
 };
 
 SubTaskCard.propTypes = {
-    subTask: PropTypes.object.isRequired,
-    serialNumber: PropTypes.number.isRequired
+    subTask: PropTypes.object.isRequired
 };
 
 export default SubTaskCard;
