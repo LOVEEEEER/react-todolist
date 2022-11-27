@@ -31,3 +31,20 @@ export function displayDate(data) {
             : date.getMonth() + 1
     }.${date.getFullYear()}`;
 }
+
+export const inWorkingDate = (mill) => {
+    const date = new Date(mill);
+    const dateNow = new Date();
+    const hourDif = (dateNow.getTime() - date.getTime()) / 1000 / 60 / 60;
+    return `${hourDif} часов`;
+};
+
+export const getFormFormatDateFromTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const dateDay = date.getDate();
+    const dateMonth = date.getMonth() + 1;
+    const dateYear = date.getFullYear();
+    return `${dateDay < 10 ? "0" + dateDay : dateDay}.${
+        dateMonth < 10 ? "0" + dateMonth : dateMonth
+    }.${dateYear}`;
+};
