@@ -9,22 +9,14 @@ import { getSubTasksByTaskId } from "../../../store/reducers/subTasksReducer";
 import SubTasksList from "../SubTasksList";
 import { removeTask } from "../../../store/reducers/tasksReducer";
 import Comments from "../Comments";
+import { getFilesByTask } from "../../../store/reducers/filesReducer";
+import FilesList from "../FilesList";
+import { getTaskPriority } from "../../../utils/getTaskPriority";
 
 const TaskInfo = ({ task, toggleContent, setActiveModal }) => {
     const dispatch = useDispatch();
     const subTasks = useSelector(getSubTasksByTaskId(task.id));
-    const getTaskPriority = (priority) => {
-        switch (priority) {
-            case "low":
-                return "Низкий";
-            case "medium":
-                return "Средний";
-            case "high":
-                return "Высокий";
-            default:
-                return priority;
-        }
-    };
+    const filesByTask = useSelector(getFilesByTask(task.id));
 
     const handleRemoveTask = () => {
         dispatch(removeTask(task.id));
@@ -67,17 +59,32 @@ const TaskInfo = ({ task, toggleContent, setActiveModal }) => {
                     Статус: {task.status}
                 </li>
             </ul>
-            <div className={styles.task__window_sub_head}>
-                <h3 className={styles.task__window_sub_task_title}>
-                    Подзадачи
-                </h3>
-                <Button onClick={() => toggleContent("create")}>Создать</Button>
+            <div className={styles.task__window_sub_wrap}>
+                <div className={styles.task__window_sub_head}>
+                    <h3 className={styles.task__window_sub_task_title}>
+                        Подзадачи
+                    </h3>
+                    <Button onClick={() => toggleContent("create")}>
+                        Создать
+                    </Button>
+                </div>
+                {subTasks.length > 0 ? (
+                    <SubTasksList subTasks={subTasks} />
+                ) : (
+                    "Список подзадач пуст"
+                )}
             </div>
-            {subTasks.length > 0 ? (
-                <SubTasksList subTasks={subTasks} />
-            ) : (
-                "Список подзадач пуст"
-            )}
+            <div className={styles.task__window_attached_files_block}>
+                <div className={styles.task__window_attached_head}>
+                    <h3 className={styles.task__window_sub_task_title}>
+                        Файлы
+                    </h3>
+                    <Button onClick={() => toggleContent("files")}>
+                        Создать
+                    </Button>
+                </div>
+                <FilesList files={filesByTask} />
+            </div>
             <div className={styles.task__window_comments}>
                 <h3
                     className={`${styles.task__window_sub_task_title} ${styles.task__comment_title}`}

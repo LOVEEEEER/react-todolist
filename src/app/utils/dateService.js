@@ -39,20 +39,23 @@ export const inWorkingDate = (mill) => {
         if (hoursDif > 0) {
             const lastOne = hoursDif.toString()[hoursDif.toString().length - 1];
             if (hoursDif === 1) return `${hoursDif} час`;
-            if ([2, 3, 4].includes(lastOne)) return `${hoursDif} часа`;
+            if ([2, 3, 4].includes(Number(lastOne))) return `${hoursDif} часа`;
             return `${hoursDif} часов`;
         } else {
             const minutesDif = Math.round(mill / 1000 / 60);
             const lastOne =
                 minutesDif.toString()[minutesDif.toString().length - 1];
-            if (lastOne === 1) return `${minutesDif} минута`;
-            if ([2, 3, 4].includes(lastOne)) return `${minutesDif} минуты`;
+            console.log(lastOne);
+            if (Number(lastOne) === 1) return `${minutesDif} минуту`;
+            if ([2, 3, 4].includes(Number(lastOne))) {
+                return `${minutesDif} минуты`;
+            }
             return `${minutesDif} минут`;
         }
     } else {
         const lastOne = dayDif.toString()[dayDif.toString().length - 1];
-        if (lastOne === 1) return `${dayDif} день`;
-        if ([2, 3, 4].includes(lastOne)) return `${dayDif} дня`;
+        if (Number(lastOne) === 1) return `${dayDif} день`;
+        if ([2, 3, 4].includes(Number(lastOne))) return `${dayDif} дня`;
         return `${dayDif} дней`;
     }
 };

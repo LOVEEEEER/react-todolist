@@ -5,6 +5,7 @@ import { getTaskById } from "../../../store/reducers/tasksReducer";
 import TaskInfo from "../TaskInfo";
 import EditTaskForm from "../forms/EditTaskForm";
 import CreateSubTaskForm from "../forms/CreateSubTaskForm";
+import CreateFilesForm from "../forms/CreateFilesForm";
 
 const TaskWindow = ({ id, ...rest }) => {
     const task = useSelector(getTaskById(id));
@@ -32,6 +33,13 @@ const TaskWindow = ({ id, ...rest }) => {
             case "edit":
                 return (
                     <EditTaskForm task={task} toggleContent={toggleContent} />
+                );
+            case "files":
+                return (
+                    <CreateFilesForm
+                        taskId={task.id}
+                        toggleContent={toggleContent}
+                    />
                 );
 
             default:

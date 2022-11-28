@@ -12,11 +12,25 @@ export const useForm = (initialState, config, initialDeadLine) => {
         }
     }, [data]);
 
+    const handleChange = ({ target }) => {
+        setData((prevState) => ({ ...prevState, [target.name]: target.value }));
+    };
+
     const handleDateChange = (e) => {
         const {
-            nativeEvent: { data: lastOne },
+            nativeEvent: { data: lastOne, inputType },
             target: { name, value }
         } = e;
+        if (inputType === "deleteContentBackward") {
+            handleChange({
+                target: {
+                    name: e.target.name,
+                    value: e.target.value
+                }
+            });
+            setDeadLine(e.target.value);
+            return;
+        }
         if (!Number.isNaN(Number(lastOne)) && value.length < 11) {
             const deadlineVal =
                 value.length === 2 || value.length === 5 ? `${value}.` : value;
@@ -38,10 +52,6 @@ export const useForm = (initialState, config, initialDeadLine) => {
             };
             handleChange(fakeEvent);
         }
-    };
-
-    const handleChange = ({ target }) => {
-        setData((prevState) => ({ ...prevState, [target.name]: target.value }));
     };
     const validate = () => {
         const errors = validator(data, config);

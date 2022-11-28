@@ -5,6 +5,7 @@ import { loadProjects } from "../../../store/reducers/projectsReducer";
 import { loadTasks } from "../../../store/reducers/tasksReducer";
 import { loadSubTasks } from "../../../store/reducers/subTasksReducer";
 import { loadComments } from "../../../store/reducers/commentsReducer";
+import { loadFiles } from "../../../store/reducers/filesReducer";
 
 const AppLoader = ({ children }) => {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const AppLoader = ({ children }) => {
         dispatch(loadTasks());
         dispatch(loadSubTasks());
         dispatch(loadComments());
+        dispatch(loadFiles());
     }, []);
     return children;
 };

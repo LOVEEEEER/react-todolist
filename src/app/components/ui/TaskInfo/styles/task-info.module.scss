@@ -38,7 +38,16 @@
     justify-content: space-between;
     margin-bottom: 18px;
   }
+  &__window_sub_wrap {
+    margin-bottom: 20px;
+  }
   &__comment_title {
     margin-bottom: 15px;
+  }
+  &__window_attached_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
   }
 }
