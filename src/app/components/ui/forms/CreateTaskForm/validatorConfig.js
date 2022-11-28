@@ -2,6 +2,9 @@ export const validatorConfig = {
     title: {
         isRequired: {
             message: "Обязательно для заполнения"
+        },
+        notNumber: {
+            message: "Поле не может быть числом"
         }
     },
     description: {

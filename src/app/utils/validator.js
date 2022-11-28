@@ -11,6 +11,14 @@ export const validator = (data, config) => {
             case "max":
                 if (data.length > config.params) return config.message;
                 break;
+            case "notNumber":
+                if (Number(data)) return config.message;
+                break;
+            case "isUrl":
+                if (!/(http|https):\/\/([\w.]+\/?)\S*/g.test(data)) {
+                    return config.message;
+                }
+                break;
 
             default:
                 return config.message;

@@ -1,0 +1,15 @@
+.back_arrow {
+  &_text {
+    font-size: 14px;
+  }
+  width: 20px;
+  &_wrap {
+    display: flex;
+    align-items: center;
+    width: 50px;
+    margin-bottom: 15px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

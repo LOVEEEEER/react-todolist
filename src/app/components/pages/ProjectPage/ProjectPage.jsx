@@ -91,12 +91,13 @@ const ProjectPage = () => {
                 </div>
                 <TextField
                     value={searchQuery}
+                    placeholder="Search..."
                     onChange={({ target: { value } }) =>
                         handleSearchQuery(value)
                     }
                 />
                 <ul className={styles.project__tasks_list}>
-                    {tasks.length > 0 ? (
+                    {searchedQueryItems.length > 0 ? (
                         <TasksList
                             tasks={searchedQueryItems}
                             onDragStart={handleDragStart}

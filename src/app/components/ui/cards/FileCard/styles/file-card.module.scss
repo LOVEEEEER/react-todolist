@@ -1,0 +1,12 @@
+.file {
+  &__card {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #EEEEEE;
+  }
+  &__link {
+    color: #000000;
+    text-decoration: none;
+  }
+}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Button from "../../../common/Button";
 import { displayDate } from "../../../../utils/dateService";
 import styles from "./styles/task.card.module.scss";
+import { getTaskPriority } from "../../../../utils/getTaskPriority";
 
 const TaskCard = ({ task, onToggleTask, onDragStart, onDragEnd }) => {
     const getPriorityColor = (color) => {
@@ -37,6 +38,9 @@ const TaskCard = ({ task, onToggleTask, onDragStart, onDragEnd }) => {
                 </p>
                 <p className={styles.project__task_description}>
                     Описание: {task.description}
+                </p>
+                <p className={styles.project__task_description}>
+                    Статус: {getTaskPriority(task.priority)}
                 </p>
             </div>
             <Button onClick={() => onToggleTask(task.id)}>Подробнее</Button>

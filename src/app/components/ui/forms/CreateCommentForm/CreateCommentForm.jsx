@@ -9,14 +9,19 @@ import {
     getCommentById
 } from "../../../../store/reducers/commentsReducer";
 import Button from "../../../common/Button";
+import { validatorConfig } from "./validatorConfig";
 
 const CreateCommentForm = ({ taskId, answerOn }) => {
     const dispatch = useDispatch();
     const answerComment = useSelector(getCommentById(answerOn));
-    const { data, handleChange } = useForm({
-        author: "",
-        text: ""
-    });
+    const { data, handleChange, errors } = useForm(
+        {
+            author: "",
+            text: ""
+        },
+        validatorConfig
+    );
+    const isValid = Object.keys(errors).length === 0;
     useEffect(() => {
         if (answerComment) {
             const fakeEvent = {
@@ -30,20 +35,22 @@ const CreateCommentForm = ({ taskId, answerOn }) => {
     }, [answerComment]);
     const handleSubmit = (e) => {
         e.preventDefault();
-        const comment = {
-            text: data.text,
-            author: data.author,
-            taskId,
-            id: `${Date.now() + Math.ceil(Math.random())}`,
-            answerOn: answerComment?.id || null,
-            image: `https://avatars.dicebear.com/api/avataaars/${(
-                Math.random() + 15
-            )
-                .toString(36)
-                .substring(7)}.svg`,
-            created_at: Date.now()
-        };
-        dispatch(createCommentForTask(comment));
+        if (isValid) {
+            const comment = {
+                text: data.text,
+                author: data.author,
+                taskId,
+                id: `${Date.now() + Math.ceil(Math.random())}`,
+                answerOn: answerComment?.id || null,
+                image: `https://avatars.dicebear.com/api/avataaars/${(
+                    Math.random() + 15
+                )
+                    .toString(36)
+                    .substring(7)}.svg`,
+                created_at: Date.now()
+            };
+            dispatch(createCommentForTask(comment));
+        }
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -52,12 +59,14 @@ const CreateCommentForm = ({ taskId, answerOn }) => {
                 name="author"
                 value={data.author}
                 placeholder="Иван Иванов"
+                error={errors.author}
                 onChange={handleChange}
             />
             <TextAreaField
                 label="Комментарий"
                 name="text"
                 value={data.text}
+                error={errors.text}
                 placeholder="Я считаю..."
                 onChange={handleChange}
             />
