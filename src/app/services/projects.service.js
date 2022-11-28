@@ -12,7 +12,7 @@ const projectsService = {
         return data;
     },
     remove: async (id) => {
-        const { data } = await httpService.delete(id);
+        const { data } = await httpService.delete(projectsEndPoint + id);
         return data;
     }
 };
