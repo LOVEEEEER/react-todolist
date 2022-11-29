@@ -17,12 +17,5 @@ const rootReducer = combineReducers({
 });
 
 export function configureStore() {
-    return createStore(
-        rootReducer,
-        compose(
-            middleWareEnchancer,
-            window.__REDUX_DEVTOOLS_EXTENSION__ &&
-                window.__REDUX_DEVTOOLS_EXTENSION__()
-        )
-    );
+    return createStore(rootReducer, compose(middleWareEnchancer));
 }
