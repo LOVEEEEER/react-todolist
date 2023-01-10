@@ -51,8 +51,12 @@ const projectsReducer = (state = intitialState, action) => {
 export const loadProjects = () => async (dispatch) => {
     dispatch(requested());
     try {
-        const { content } = await projectsService.fetchAll();
-        dispatch(received(content));
+        const data = await projectsService.fetchAll();
+        if (data) {
+            dispatch(received(data.content));
+        } else {
+            dispatch(received([]));
+        }
     } catch (error) {
         dispatch(requestFailed(error.message));
     }

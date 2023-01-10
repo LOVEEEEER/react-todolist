@@ -16,6 +16,9 @@ const ProjectsListPage = () => {
     const dispatch = useDispatch();
     const projects = useSelector(getProjects());
     const projectsLoading = useSelector(getIsLoading());
+    const project1s = useSelector((state) => state.projects);
+
+    console.log(project1s);
 
     if (projectsLoading) {
         return "loading...";
